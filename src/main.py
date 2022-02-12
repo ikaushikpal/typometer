@@ -3,9 +3,6 @@ from curses import wrapper
 
 class Display:
 
-    def __init__(self) -> None:
-        pass
-
     def start_screen(self,stdscr):
         stdscr.clear()
         stdscr.addstr("A General Text.")
@@ -59,16 +56,25 @@ class Display:
                     current_text.pop()
                 elif len(current_text) < len(target_text):
                     current_text.append(key)
-
-    def main(self,stdscr):
+    @staticmethod
+    def main(stdscr):
         curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
         curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
         curses.init_pair(3, curses.COLOR_WHITE, curses.COLOR_BLACK)
         
-        self.start_screen(stdscr)
+        Display.start_screen(stdscr)
         while True:
-            self.wpm_test(stdscr)
+            Display.wpm_test(stdscr)
             stdscr.addstr(2, 0, "You completed the text! Press any key to continue...")
             key = stdscr.getkey()
             if ord(key) == 27:
                 break
+
+
+if __name__ == "__main__":
+    SCREEN = curses.initscr()
+    SCREEN.start_color(Display)
+    wrapper(Display.main(SCREEN))
+    # wrapper(Display.main(stdscr))
+
+

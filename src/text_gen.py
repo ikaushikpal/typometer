@@ -10,8 +10,8 @@ class TextGenerator:
         self.randObj = None
 
     def isConnected(self):
-        respose = requests.get("https://1.1.1.1/")
-        if respose.status_code == 200:
+        response = requests.get("https://1.1.1.1/")
+        if response.status_code == 200:
             self.internet = True
         else:
             self.internet = False

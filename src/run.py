@@ -26,9 +26,6 @@ def display_text(stdscr, target, current, wpm=0):
         stdscr.addstr(0, i, char, color)
 
 def load_text():
-    # with open("text.txt", "r") as f:
-    #   lines = f.readlines()
-    #   return random.choice(lines).strip()
     txt = TextGenerator()
     generated_text = txt.generate(TEXT_LENGTH)
     return generated_text
@@ -36,12 +33,13 @@ def load_text():
 def wpm_test(stdscr):
     target_text = load_text()
     current_text = []
+    
     wpm = 0
-    start_time = time.time()
-    stdscr.nodelay(True)
+
+    stdscr.nodelay(False)
 
     while True:
-        time_elapsed = max(time.time() - start_time, 1)
+        time_elapsed = max(time.time() - START_TIME, 1)
         
         wpm = round((TEXT_LENGTH*60)/time_elapsed)
         stdscr.clear()
@@ -73,11 +71,15 @@ def main(stdscr):
     curses.init_pair(3, curses.COLOR_WHITE, curses.COLOR_BLACK)
 
     start_screen(stdscr)
+    game_start = False
     while True:
         wpm_test(stdscr)
         stdscr.addstr(3, 0, "You completed the text! Press any key to continue...")
         key = stdscr.getkey()
-
+        if not game_start and ord(key) == 13:
+            game_start = True
+            global START_TIME
+            START_TIME = time.time()
         if ord(key) == 27:
             break
 

@@ -5,6 +5,8 @@ import random
 from text_gen import TextGenerator
 
 TEXT_LENGTH = 25
+global START_TIME
+START_TIME = time.time()
 
 def start_screen(stdscr):
     stdscr.clear()
@@ -47,7 +49,7 @@ def wpm_test(stdscr):
         stdscr.refresh()
 
         if "".join(current_text) == target_text:
-            stdscr.nodelay(False)
+            stdscr.nodelay(True)
             break
 
         try:
@@ -78,7 +80,7 @@ def main(stdscr):
         key = stdscr.getkey()
         if not game_start and ord(key) == 13:
             game_start = True
-            global START_TIME
+            
             START_TIME = time.time()
         if ord(key) == 27:
             break
